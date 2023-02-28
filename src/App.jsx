@@ -13,11 +13,12 @@ import Signup from './components/Signup/Signup'
 import CusCards from './components/Cards/CusCards'
 import View from './components/View'
 import List from './components/List/List'
+
 function App() {
 
   return (
     <Routes>
-      <Route path='/home' element={<><Navbar path="/home"/><CusCards/><Footer/></>}/>
+      <Route path='/home' element={<><Navbar path="/home"/><CusCards/><Contact/><Footer/></>}/>
       <Route path='/add-yours' element={<><Navbar path="/add-yours"/><Addyours/><Footer/></>}/>
       <Route path='/view-page/:id' element={<><Navbar path="/add-yours"/><View/> <Footer/></>}/>
       <Route path='/product' element={<><Navbar path="/product"/><List/> <Footer/></>}/>
