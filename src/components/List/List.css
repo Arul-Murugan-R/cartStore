@@ -1,0 +1,31 @@
+
+    main{
+      width: 100vw;
+    }
+    @media (max-width:600px){
+      .disable{
+        display:none;
+      }
+    }
+    @media (max-width:410px){
+      .btn-group{
+        width:10px;
+        padding:1px;
+        margin:0 auto;
+      }
+      .btn-group .btn{
+        padding:2px;
+        font-size: 0.9rem;
+      }
+      .main{
+        width:auto !important;
+        padding:3px 1px !important;
+        margin:2px;
+      }
+      .table>:not(caption)>*>*{
+        padding:0.3rem !important;
+      }
+      .btn-group{
+        width:auto !important;
+      }
+    }

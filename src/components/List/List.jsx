@@ -1,6 +1,7 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import './List.css'
 
 const List = () => {
     const [error, setError] = useState()
@@ -54,7 +55,7 @@ const List = () => {
     return (
 
         <main className="p-lg-4 m-lg-2">
-        <table className="table table-hover">
+        <table className="table">
             <thead>
               <tr>
                 <th scope="col">No</th>
