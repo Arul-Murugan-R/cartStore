@@ -9,26 +9,51 @@ const List = () => {
     const [products, setProduct] = useState([])
     const productData = async () => {
         try {
-            const res = await fetch('https://temple-api.vercel.app/home', {
+            setLoading(true)
+            const res = await fetch(import.meta.env.VITE_BACKEND+'/product', {
                 method: "GET",
                 headers: {
-                    "Content-Type": "application/json"
+                    "Authorization":"bearer "+localStorage.getItem("token")
                 },
             })
+            if(res.status == 401){
+                setError("Something went wrong"||res.message)
+                setLoading(false)
+                return
+            }
             const data = await res.json()
             console.log(data);
             setProduct(data.products)
             setLoading(false)
-            console.log(data.products)
         } catch (err) {
             console.log(err)
             setLoading(false)
             setError(err)
         }
     }
+    const deleteHandler = async (id) => {
+        console.log(id)
+        try {
+            setLoading(true)
+            const res = await fetch(import.meta.env.VITE_BACKEND+'/delete/'+id, {
+                method: "post",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization":"bearer "+localStorage.getItem("token")},
+            })
+            const data = await res.json()
+            console.log(data);
+            productData()
+        } catch (err) {
+            console.log(err)
+            setLoading(false)
+            setError(err)
+        }   
+    }
     useEffect(() => {
         productData()
     }, [])
+    
     // return (<h1>Testing</h1>);
     if (loading) {
         return (
@@ -39,14 +64,9 @@ const List = () => {
             </div>
         )
     }
-    if (error) {
+    if (products.length <= 0 || products==[]) {
         return (
-            <h3>Error...</h3>
-        )
-    }
-    if (products.length <= 0 && products==[]) {
-        return (
-            <div classNameName="alert alert-primary" role="alert">
+            <div className="alert alert-primary" role="alert">
                 Product Not Found <Link to="/add-yours" className="alert-link">Add Yours</Link>
             </div>
         )
@@ -55,6 +75,7 @@ const List = () => {
     return (
 
         <main className="p-lg-4 m-lg-2">
+            {error&&<div className="alert alert-danger" role="alert">{error}</div>}
         <table className="table">
             <thead>
               <tr>
@@ -67,15 +88,15 @@ const List = () => {
             </thead>
             <tbody>
             {products.map((product) => (
-              <tr>
+              <tr key={product._id}>
                 <th scope="row">{i++}</th>
                 <td className="disable">{product._id}</td>
                 <td >{product.name} </td>
                 <td className="disable">{product.location} </td>
                 <td className="btn-group">
                   <Link to={"/view-page/"+product._id} className="btn btn-outline-success">View</Link>
-                    <Link to="/edit/" className="btn btn-outline-primary">Edit</Link>
-                    <Link to="/delete/" className="btn btn-outline-danger">Delete</Link></td>
+                    <Link to={"/edit/"+product._id} className="btn btn-outline-primary">Edit</Link>
+                    <Link onClick={()=>{deleteHandler(product._id)}} className="btn btn-outline-danger">Delete</Link></td>
               </tr>
             ))}
             </tbody>
