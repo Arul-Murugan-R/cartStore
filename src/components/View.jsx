@@ -10,18 +10,14 @@ const View = ()=>{
     // console.log(id);
     const fetchProduct = async () => {
         try {
-            const res = await fetch('https://temple-api.vercel.app/view-page/'+id, {
+            const res = await fetch(import.meta.env.VITE_BACKEND+'/view-page/'+id, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json"
                 },
             })
             const data = await res.json()
-            console.log(data);
-            console.log(productF)
             setProduct(data.product)
-            console.log(productF)
-            console.log(data.product)
             setLoading(false)
         } catch (err) {
             console.log(err)
