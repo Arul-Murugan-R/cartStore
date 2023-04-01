@@ -5,6 +5,7 @@ const Navbar = (props) => {
   const logoutHandler = () => {
     localStorage.clear();
     setIsLoggedIn(false);
+    window.location = '/home';
   };
   useEffect(() => {
     const token = localStorage.getItem('token');
