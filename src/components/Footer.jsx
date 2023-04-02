@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 const Footer = () => {
     return (
-        <footer className="text-muted py-5">
+        <footer className="text-muted py-5 bottom-0">
     <div className="container">
       <p className="float-end mb-1">
         <Link to="#">Back to top</Link>
