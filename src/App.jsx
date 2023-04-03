@@ -15,12 +15,13 @@ import View from './components/View'
 import List from './components/List/List'
 
 function App() {
-
+  
   return (
     <Routes>
       <Route path='/home' element={<><Navbar path="/home"/><CusCards/><Footer/></>}/>
       <Route path='/add-yours' element={<><Navbar path="/add-yours"/><Addyours/><Footer/></>}/>
       <Route path='/view-page/:id' element={<><Navbar path="/add-yours"/><View/> <Footer/></>}/>
+      <Route path='/edit/:id' element={<><Navbar path="/edit"/><Addyours/><Footer/></>}/>
       <Route path='/product' element={<><Navbar path="/product"/><List/> <Footer/></>}/>
       <Route path='/auth/login' element={<><Navbar/><Login/><Footer/></>}/>
       <Route path='/auth/signup' element={<><Navbar/><Signup/><Footer/></>}/>
