@@ -2,7 +2,7 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import './App.css'
 // import {Navbar,Contact,Footer,Addyours} from '/components/'
-// import {Navbar,Contact,Footer,Addyours} from '/components/'
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import Addyours from './components/Addyours'
@@ -18,7 +18,6 @@ function App() {
   
   return (
     <Routes>
-      <Route path='/'element={<><Navbar path="/home"/><CusCards/><Footer/></>}/>
       <Route path='/home' element={<><Navbar path="/home"/><CusCards/><Footer/></>}/>
       <Route path='/add-yours' element={<><Navbar path="/add-yours"/><Addyours/><Footer/></>}/>
       <Route path='/view-page/:id' element={<><Navbar path="/add-yours"/><View/> <Footer/></>}/>
@@ -26,6 +25,9 @@ function App() {
       <Route path='/product' element={<><Navbar path="/product"/><List/> <Footer/></>}/>
       <Route path='/auth/login' element={<><Navbar/><Login/><Footer/></>}/>
       <Route path='/auth/signup' element={<><Navbar/><Signup/><Footer/></>}/>
+      <Route path='/'
+      element={<><Navbar path="/home"/><CusCards/><Footer/></>}
+      />
     </Routes>
   )
 }
