@@ -1,13 +1,19 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link,useSearchParams } from 'react-router-dom'
 import Contact from '../Contact'
 
 const CusCards = () => {
+    const [searchParams] = useSearchParams()
+    
+    const search = searchParams.get('search')
+    const filter = searchParams.get('filter')
+        // console.log(data,searchParams.get('search'),searchParams.get('filter'))
     const [error, setError] = useState()
     const [loading, setLoading] = useState(true)
     const [products, setProduct] = useState([])
     const productData = async () => {
+        setLoading(true)
         try {
             const res = await fetch(import.meta.env.VITE_BACKEND+'/home', {
                 method: "GET",
@@ -16,19 +22,39 @@ const CusCards = () => {
                 },
             })
             const data = await res.json()
-            console.log(data);
             setProduct(data.products)
             setLoading(false)
-            console.log(data.products)
         } catch (err) {
-            console.log(err)
             setLoading(false)
             setError(err)
         }
     }
     useEffect(() => {
-        productData()
-    }, [])
+        if (search && filter) {
+            const searchProduct = async () => {
+                try {
+                    setLoading(true)
+                    const res = await fetch(import.meta.env.VITE_BACKEND + '/search?search='+search+'&filter='+filter, {
+                        method: "GET",
+                        headers: {
+                            "Content-Type": "application/json"
+                        }
+                    })
+                    const data = await res.json()
+                    console.log(data)
+                    setProduct(data.products)
+                    setLoading(false)
+                } catch (err) {
+                    console.log(err)
+                    setLoading(false)
+                    setError(err)
+                }
+            }
+            searchProduct()
+        }else{
+            productData()
+        }
+    }, [searchParams])
     // return (<h1>Testing</h1>);
     if (loading) {
         return (
