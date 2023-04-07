@@ -5,7 +5,87 @@ import { useNavigate } from "react-router-dom";
 
 const Addyours = () => {
   const [error,setError] = useState(false)
+  const [loading,setLoading] = useState(false)
+  const [edit,setEdit] = useState(false)
+  const {id} = useParams()
+  const navigate = useNavigate();
+  const formData = new FormData();
+  useEffect(() => {
+    if(id){
+      setEdit(true)
+      fetch(import.meta.env.VITE_BACKEND+'/edit/'+id,{
+        method:'GET',
+        headers: {
+          "Authorization":"bearer "+localStorage.getItem('token')
+        },
+      }).then((res) => {
+        console.log(res)
+        if(res.status == 200 || res.status == 'ok' || res.status == 201){
+          setLoading(false)
+          return res.json()
+        }
+        return res.json()
+      })
+      .then((resData) => {
+        console.log(resData)
+        setLoading(false)
+        setProduct(resData.product)
+      })
+      .catch((err) => {
+        console.log(err)
+        setLoading(false)
+        setError(err.message)
+      })
+    }
+  },[])
+  const onBlurHandler = (e) => {
+    setEdit(false)   
+      if(e.target.name=='photo'){
+        formData.append('photo',e.target.files[0])
+        return
+      }
+      formData.append(e.target.name,e.target.value)
 
+  }
+  const submitHandler = async (e) => {
+      e.preventDefault()
+      setLoading(true)
+    fetch(import.meta.env.VITE_BACKEND+'/add-yours',{
+          method:'POST',
+          body:formData,
+          headers: {
+            "Authorization":"bearer "+localStorage.getItem('token')
+          },
+      }).then((res) => {
+        console.log(res)
+        if(res.status == 200 || res.status == 'ok' || res.status == 201){
+          setLoading(false)
+          return navigate('/home')
+        }
+        return res.json()
+      })
+      .then((resData) => {
+        console.log(resData)
+        setLoading(false)
+        if(resData.message){
+          setError(resData.message)
+        }
+      })
+      .catch((err) => {
+        console.log(err)
+        setLoading(false)
+        setError(err)
+      })
+  }
+  if (loading) {
+    return (
+        <div class="d-flex justify-content-center">
+            <div class="spinner-border" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+    )
+}
     return(
         <>
         <nav aria-label="breadcrumb">
