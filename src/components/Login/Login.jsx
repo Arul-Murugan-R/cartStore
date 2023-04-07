@@ -1,10 +1,12 @@
 import { useState } from 'react'
+import { useNavigate } from "react-router-dom";
 
 import './Login.css'
 const Login = () => {
     const [loginData, seLoginData] = useState({})
     const [isLoading, setIsLoading] = useState(false)
-    const [errors, setErrors] = useState()
+    const navigate = useNavigate();
+    const [errors, setErrors] = useState(null)
     const onBlurHandler = (e) => {
         setErrors(null)
         const { name, value } = e.target
@@ -32,7 +34,7 @@ const Login = () => {
                     setIsLoading(false)
                     seLoginData({})
                     //localStorage.setItem('Name', 'Rahul');
-                    window.location = '/home'
+                    return navigate('/home')
                 })
             }
             return res.json()

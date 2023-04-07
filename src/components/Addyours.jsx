@@ -10,34 +10,6 @@ const Addyours = () => {
   const {id} = useParams()
   const navigate = useNavigate();
   const formData = new FormData();
-  useEffect(() => {
-    if(id){
-      setEdit(true)
-      fetch(import.meta.env.VITE_BACKEND+'/edit/'+id,{
-        method:'GET',
-        headers: {
-          "Authorization":"bearer "+localStorage.getItem('token')
-        },
-      }).then((res) => {
-        console.log(res)
-        if(res.status == 200 || res.status == 'ok' || res.status == 201){
-          setLoading(false)
-          return res.json()
-        }
-        return res.json()
-      })
-      .then((resData) => {
-        console.log(resData)
-        setLoading(false)
-        setProduct(resData.product)
-      })
-      .catch((err) => {
-        console.log(err)
-        setLoading(false)
-        setError(err.message)
-      })
-    }
-  },[])
   const onBlurHandler = (e) => {
     setEdit(false)   
       if(e.target.name=='photo'){

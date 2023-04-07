@@ -1,10 +1,12 @@
 import { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 
 import './Signup.css'
 const Signup = () => {
     const [signupData, setSignupData] = useState({})
     const [isLoading, setIsLoading] = useState(false)
-    const [errors, setErrors] = useState()
+    const navigate = useNavigate();
+    const [errors, setErrors] = useState(null)
     const onBlurHandler = (e) => {
         setErrors(null)
         const { name, value } = e.target
@@ -26,7 +28,7 @@ const Signup = () => {
                 setErrors(null)
                 setIsLoading(false)
                 setSignupData({})
-                window.location = '/auth/login'
+                return navigate('/auth/login')
             }
             return res.json()
         }).then((data) => {
