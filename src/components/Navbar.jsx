@@ -1,11 +1,12 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 const Navbar = (props) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const navigate = useNavigate();
   const logoutHandler = () => {
     localStorage.clear();
     setIsLoggedIn(false);
-    window.location = '/home';
+    return navigate('/home');
   };
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -34,7 +35,7 @@ const Navbar = (props) => {
           <li><Link to="#" className="nav-link px-2 text-white">About</Link></li>
         </ul>
 
-        <form className="col-md-12 col-lg-auto mb-3 mb-lg-0 me-lg-3 d-flex" action="/home" method="get">
+        <form className="col-md-12 col-lg-auto mb-3 mb-lg-0 me-lg-3 d-flex"  to="/home" method="get">
           <input type="search" className="form-control form-control-dark" placeholder="Search..." aria-label="Search" name="search"/>
           <div className="form-group col-md-4 dropdown">
             <select name="filter"  className="form-control">
