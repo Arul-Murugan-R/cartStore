@@ -34,7 +34,7 @@ const Login = () => {
                     setIsLoading(false)
                     seLoginData({})
                     //localStorage.setItem('Name', 'Rahul');
-                    navigate('/')
+                    return navigate('/')
                 })
             }
             return res.json()
