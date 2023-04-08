@@ -6,7 +6,7 @@ const Navbar = (props) => {
   const logoutHandler = () => {
     localStorage.clear();
     setIsLoggedIn(false);
-    return navigate('/home');
+    return navigate('/');
   };
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -21,11 +21,11 @@ const Navbar = (props) => {
 <header className="nav-bar p-3 bg-dark text-white sticky-md-top">
     <div className="container">
       <div className="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-        <Link to="/home" className="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none me-3">
+        <Link to="/" className="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none me-3">
           <img className="logo" src="https://res.cloudinary.com/da3xs5vzk/image/upload/v1676896905/logo6_kqpwf1.ico" />
         </Link>
         <ul className="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-lg-center mb-md-0">
-        <li><Link to="/home" className={`nav-link px-2 ${props.path=='/home'?'text-secondary':'text-white'}`}>Home</Link></li>
+        <li><Link to="/" className={`nav-link px-2 ${props.path=='/home'?'text-secondary':'text-white'}`}>Home</Link></li>
           
           <li><Link to="/add-yours" className={`nav-link px-2 ${props.path=='/add-yours'?'text-secondary':'text-white'}`}>Add Yours</Link></li>
           

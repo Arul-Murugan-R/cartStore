@@ -7,6 +7,7 @@ const Addyours = () => {
   const [error,setError] = useState(false)
   const [loading,setLoading] = useState(false)
   const [edit,setEdit] = useState(false)
+  const [product,setProduct] = useState({})
   const {id} = useParams()
   const navigate = useNavigate();
   const formData = new FormData();
@@ -32,7 +33,7 @@ const Addyours = () => {
         console.log(res)
         if(res.status == 200 || res.status == 'ok' || res.status == 201){
           setLoading(false)
-          return navigate('/home')
+          return navigate('/')
         }
         return res.json()
       })
