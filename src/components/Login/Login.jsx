@@ -25,7 +25,8 @@ const Login = () => {
         }).then((res) => {
             console.log(res)
             if (res.status === 'ok'||res.status === 200) {
-                res.json().then((data) => {
+                res.json()
+                .then((data) => {
                     console.log(data)
                     localStorage.setItem('token', data.token);
                     localStorage.setItem('Name', data.name);
@@ -34,10 +35,10 @@ const Login = () => {
                     setIsLoading(false)
                     seLoginData({})
                     //localStorage.setItem('Name', 'Rahul');
-                    navigate('/')
+                    return navigate('/')
                 })
             }
-            return res.json()
+            return res;
         }).then((data) => {
             console.log(data)
             if (data.message) {

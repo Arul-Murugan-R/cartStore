@@ -13,7 +13,7 @@ const Navbar = (props) => {
     if (token) {
       setIsLoggedIn(true);
     }
-  }, []);
+  }, [localStorage.getItem('token')]);
 
 
     return(
