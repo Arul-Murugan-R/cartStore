@@ -7,7 +7,7 @@ const Addyours = () => {
   const [error,setError] = useState(false)
   const [loading,setLoading] = useState(false)
   const [edit,setEdit] = useState(false)
-  // const [product,setProduct] = useState({})
+  const [product,setProduct] = useState({})
   const {id} = useParams()
   const navigate = useNavigate();
   const formData = new FormData();
@@ -17,8 +17,8 @@ const Addyours = () => {
       fetch(import.meta.env.VITE_BACKEND+'/edit/'+id,{
         method:'GET',
         headers: {
-          "Authorization":"bearer "+localStorage.getItem('token')
-        },
+          "Content-Type": "application/json",
+          "Authorization":"bearer "+localStorage.getItem("token")},
       }).then((res) => {
         console.log(res)
         if(res.status == 200 || res.status == 'ok' || res.status == 201){
@@ -29,6 +29,8 @@ const Addyours = () => {
       })
       .then((resData) => {
         console.log(resData)
+        setLoading(false)
+        setProduct(resData.product)
       })
       .catch((err) => {
         console.log(err)
