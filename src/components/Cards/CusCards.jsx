@@ -2,6 +2,7 @@ import React from 'react'
 import { useState, useEffect } from 'react'
 import { Link,useSearchParams } from 'react-router-dom'
 import Contact from '../Contact'
+import moment from 'moment/moment'
 
 const CusCards = () => {
     const [searchParams] = useSearchParams()
@@ -95,7 +96,7 @@ const CusCards = () => {
                                     </div>
                                     <p className="card-text overflow-hidden" style={{ height: "50px" }}>{product.desc} </p>
                                     <div className="d-flex justify-content-between align-items-center">
-                                        <small className="text-muted">{product.createdAt} </small>
+                                        <small className="text-muted">{moment(product.createdAt).format('DD/MM/YYYY')} </small>
                                     </div>
                                 </div>
                             </div>

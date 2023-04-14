@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { useNavigate } from "react-router-dom";
+import { useNavigate,Link } from "react-router-dom";
 
 const Addyours = () => {
   const [error,setError] = useState(false)
@@ -91,7 +91,7 @@ const Addyours = () => {
         <>
         <nav aria-label="breadcrumb">
           <ol className="breadcrumb">
-            <li className="breadcrumb-item"><a href="/home">Home</a></li>
+            <li className="breadcrumb-item"><Link to="/home">Home</Link></li>
             <li className="breadcrumb-item active" aria-current="page">Add Yours</li>
           </ol>
         </nav>
