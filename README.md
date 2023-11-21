@@ -9,13 +9,12 @@ Built using the MERN (MongoDB, Express.js, React, Node.js) stack, this project p
 ## Frontend:
 
 - React
-- Redux (or any state management library you used)
 - HTML, CSS, JavaScript
 ## Backend:
 
 - Node.js
 - Express.js
-- MongoDB (or any database you used)
+- MongoDB 
 - Backend Repository : [https://github.com/Arul-Murugan-R/temple-api/tree/main](https://github.com/Arul-Murugan-R/temple-api/tree/main)
 ## Authentication:
 
