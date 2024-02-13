@@ -16,13 +16,14 @@ const CusCards = () => {
     const productData = async () => {
         setLoading(true)
         try {
-            const res = await fetch(import.meta.env.VITE_BACKEND+'/home', {
+            const res = await fetch(import.meta.env.VITE_BACKEND+'/products', {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json"
                 },
             })
             const data = await res.json()
+            console.log(data)
             setProduct(data.products)
             setLoading(false)
         } catch (err) {
@@ -74,38 +75,39 @@ const CusCards = () => {
     if (products.length <= 0) {
         return (
             <div className="alert alert-primary" role="alert">
-                Product Not Found <Link to="/add-yours" class="alert-link">Add Yours</Link>
+                Product Not Found 
             </div>
         )
     }
     return (
         <>
         <div className="album py-5">
-            <div className="container">
-
-                <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+            <div className="container-fluid d-flex">
+                <div className="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">
                     {products.map((product) => (
-                        <div className="col">
-                            <div className="mt-5 card shadow-sm">
-                                <img className="bd-placeholder-img card-img-top overflow-hidden" width="100%" height="200" src={product.photo} alt="" />
-
+                        <Link to={`/view-page/${product.id}`} className="col text-decoration-none">
+                            <div className="mt-5 card shadow-sm position-relative">
+                            <div className='position-absolute end-0 p-1 bg-success text-white text-center'>{parseInt(product.discountPercentage)}%</div>
+                                <img className="bd-placeholder-img card-img-top overflow-hidden" width="100%" height="200" src={product.thumbnail} alt="" />
                                 <div className="card-body">
                                     <div className="d-flex justify-content-between">
-                                        <Link to={`/view-page/${product._id}`} className="card-link text-decoration-none overflow-hidden" style={{ height: "22px" }}>{product.name}</Link>
-                                        <i className="fas fa-map-marker-alt text-danger float-right me-2"><label className="text-danger ml-4">{product.location}</label></i>
+                                        <Link to={`/view-page/${product.id}`} className="card-link text-decoration-none overflow-hidden" style={{ height: "22px" }}>{product.title}</Link>
+                                        <i class="fas fa-solid fa-indian-rupee-sign float-right me-2">
+                                            <label className="text-danger ml-4 font-weight-700">₹{product.price}</label>
+                                            </i>
                                     </div>
-                                    <p className="card-text overflow-hidden" style={{ height: "50px" }}>{product.desc} </p>
+                                    {/* <p className="card-text overflow-hidden text-secondary" style={{ height: "50px" }}>{product.description} </p> */}
                                     <div className="d-flex justify-content-between align-items-center">
-                                        <small className="text-muted">{moment(product.createdAt).format('DD/MM/YYYY')} </small>
+                                        <small className="text-muted">Available Stock {product.stock} </small>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </Link>
                     ))}
                 </div>
             </div>
         </div>
-        <Contact/>
+        {/* <Contact/> */}
         </>
     )
 }
