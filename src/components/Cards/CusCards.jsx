@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 import { Link,useSearchParams } from 'react-router-dom'
 import Contact from '../Contact'
 import moment from 'moment/moment'
+import { useSelector } from 'react-redux'
 
 const CusCards = () => {
     const [searchParams] = useSearchParams()
@@ -11,21 +12,16 @@ const CusCards = () => {
     const filter = searchParams.get('filter')
         // console.log(data,searchParams.get('search'),searchParams.get('filter'))
     const [error, setError] = useState()
-    const [loading, setLoading] = useState(true)
-    const [products, setProduct] = useState([])
+    const [loading, setLoading] = useState(false)
+    const productList = useSelector((state)=>state.user.products)
+    const [products, setProduct] = useState(productList)
     const productData = async () => {
-        setLoading(true)
         try {
-            const res = await fetch(import.meta.env.VITE_BACKEND+'/products', {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-            })
-            const data = await res.json()
-            console.log(data)
-            setProduct(data.products)
-            setLoading(false)
+            setLoading(true)
+            setProduct(productList)
+            setInterval(()=>{
+                setLoading(false)
+            },1000)
         } catch (err) {
             setLoading(false)
             setError(err)
@@ -56,7 +52,7 @@ const CusCards = () => {
         }else{
             productData()
         }
-    }, [searchParams])
+    }, [productList])
     // return (<h1>Testing</h1>);
     if (loading) {
         return (
@@ -83,9 +79,10 @@ const CusCards = () => {
         <>
         <div className="album py-5">
             <div className="container-fluid d-flex">
+                
                 <div className="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">
                     {products.map((product) => (
-                        <Link to={`/view-page/${product.id}`} className="col text-decoration-none">
+                        <Link to={`/view-page/${product.id}`} className="col text-decoration-none" key={product.id}>
                             <div className="mt-5 card shadow-sm position-relative">
                             <div className='position-absolute end-0 p-1 bg-success text-white text-center'>{parseInt(product.discountPercentage)}%</div>
                                 <img className="bd-placeholder-img card-img-top overflow-hidden" width="100%" height="200" src={product.thumbnail} alt="" />
@@ -99,6 +96,7 @@ const CusCards = () => {
                                     {/* <p className="card-text overflow-hidden text-secondary" style={{ height: "50px" }}>{product.description} </p> */}
                                     <div className="d-flex justify-content-between align-items-center">
                                         <small className="text-muted">Available Stock {product.stock} </small>
+                                        <div className='p-1 bg-success text-white text-center'>⭐{product.rating}</div>
                                     </div>
                                 </div>
                             </div>
