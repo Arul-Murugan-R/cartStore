@@ -1,10 +1,18 @@
 
+  table td{
+    
+  }
     main{
       width: 100vw;
     }
-    @media (max-width:600px){
+    @media (max-width:800px){
       .disable{
         display:none;
+      }
+    }
+    @media (max-width:600px){
+      th:first-child,td:first-child{
+        display: none;
       }
     }
     @media (max-width:410px){
@@ -28,4 +36,5 @@
       .btn-group{
         width:auto !important;
       }
+      
     }
