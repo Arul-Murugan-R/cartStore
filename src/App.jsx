@@ -2,25 +2,42 @@ import {useEffect, useState} from 'react';
 import reactLogo from './assets/react.svg';
 import './App.css';
 // import {Navbar,Contact,Footer,Addyours} from '/components/'
-import {
-  createBrowserRouter,
-  RouterProvider,
-  useNavigate,
-} from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
-import Contact from './components/Contact';
 import {Routes, Route} from 'react-router-dom';
 import Login from './components/Login/Login';
-import Signup from './components/Signup/Signup';
 import CusCards from './components/Cards/CusCards';
-import View from './components/View';
-import List from './components/List/List';
 import ProtectedRoute from './ProtectedRoute';
 import Product from './components/Product';
 import Wishlist from './components/List/Wishlist';
+import Cart from './components/Cart';
+import { useDispatch } from 'react-redux';
+import { productData, userActions } from './store/userSlice';
 
+let initial = true
 function App () {
+  const [loading,setLoading] = useState(false)
+  const dispatch = useDispatch()
+  useEffect(()=>{
+      if(initial){
+        setLoading(true)
+        dispatch(userActions.checkData())
+        dispatch(productData())
+        setLoading(false)
+        initial = false
+      }
+    },[])
+
+  if (loading) {
+    return (
+        <div className="d-flex justify-content-center">
+            <div className="spinner-border" role="status">
+                <span className="sr-only">Loading...</span>
+            </div>
+        </div>
+    )
+  }
+
   return (
     <Routes>
       <Route
@@ -33,6 +50,14 @@ function App () {
         element={
           <ProtectedRoute>
             <Navbar path="/wishlist" /><Wishlist /> <Footer />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/cart"
+        element={
+          <ProtectedRoute>
+            <Navbar path="/cart" /><Cart /> <Footer />
           </ProtectedRoute>
         }
       />

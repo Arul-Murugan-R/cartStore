@@ -2,13 +2,13 @@ import { useState } from 'react'
 import { useNavigate,Link } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import './Login.css'
-import { userActions } from '../../store/userSlice';
+import { productData, userActions } from '../../store/userSlice';
 
 const Login = () => {
     const dispatch = useDispatch()
     const [loginData, seLoginData] = useState({
-        name:'kminchelle',
-        password: '0lelplR',
+        name:import.meta.env.VITE_USERNAME,
+        password:import.meta.env.VITE_PASSWORD ,
     })
     const [isLoading, setIsLoading] = useState(false)
     const navigate = useNavigate();
@@ -29,8 +29,8 @@ const Login = () => {
             },
             body: JSON.stringify({
     
-                username: 'kminchelle',
-                password: '0lelplR',
+                username: import.meta.env.VITE_USERNAME,
+                password: import.meta.env.VITE_PASSWORD,
                 // expiresInMins: 60, // optional
               })
         }).then((res) => {
@@ -42,6 +42,7 @@ const Login = () => {
                     dispatch(userActions.setLogin({
                         data
                     }))
+                    dispatch(productData())
                     setErrors(null)
                     setIsLoading(false)
                     seLoginData({})
@@ -65,9 +66,9 @@ const Login = () => {
     }
     if (isLoading) {
         return (
-            <div class="d-flex justify-content-center">
-                <div class="spinner-border" role="status">
-                    <span class="sr-only">Loading...</span>
+            <div className="d-flex justify-content-center">
+                <div className="spinner-border" role="status">
+                    <span className="sr-only">Loading...</span>
                 </div>
             </div>
         )
